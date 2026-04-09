@@ -570,29 +570,8 @@ function generateDemoSuggestions(analysis: AnalysisResults): SuggestionItem[] {
     });
   }
 
-  // Suggestion 5: NRI vs India time slot split — using per-lead rates with volume
-  const allNri = [...analysis.nriPatternsLandmark, ...analysis.nriPatternsBroadway];
-  const nriEvening = allNri.filter(p => p.nriStatus === 'NRI' && ['3_Evening', '4_Off Hours'].includes(p.timeSlot));
-  const indiaMorning = allNri.filter(p => p.nriStatus === 'India' && p.timeSlot === '1_Morning');
-  if (nriEvening.length > 0 && indiaMorning.length > 0) {
-    const nriEveLeads = nriEvening.reduce((s, p) => s + p.firstCallLeads, 0);
-    const nriEveRate = nriEveLeads > 0
-      ? nriEvening.reduce((s, p) => s + p.leadPickupRate * p.firstCallLeads, 0) / nriEveLeads : 0;
-    const indiaMornLeads = indiaMorning.reduce((s, p) => s + p.firstCallLeads, 0);
-    const indiaMornRate = indiaMornLeads > 0
-      ? indiaMorning.reduce((s, p) => s + p.leadPickupRate * p.firstCallLeads, 0) / indiaMornLeads : 0;
-    suggestions.push({
-      id: `sug-${++sugId}`,
-      ifCondition: `Split calling schedule: NRI leads in Evening/Off Hours, India leads in Morning`,
-      thenImpact: `NRI lead connection rate reaches ~${(nriEveRate * 100).toFixed(0)}% in evenings (${nriEveLeads.toLocaleString()} leads); India leads reach ~${(indiaMornRate * 100).toFixed(0)}% in mornings (${indiaMornLeads.toLocaleString()} leads)`,
-      confidence: 'high',
-      basedOn: `Per-lead connection rates across ${nriEveLeads.toLocaleString()} NRI evening leads and ${indiaMornLeads.toLocaleString()} India morning leads from both campaigns`,
-      currentValue: 0,
-      projectedValue: 0,
-      conservativeValue: 0,
-      metric: 'Lead connection rate by origin',
-    });
-  }
+  // Suggestion 5 removed: NRI leads are called in evenings by design —
+  // stating "split NRI to evening, India to morning" is the existing process, not an insight.
 
   return suggestions;
 }

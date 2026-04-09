@@ -59,7 +59,7 @@ function InfoButton({ text }: { text: string }) {
       <Info className="w-3 h-3" />
       {show && (
         <div
-          className="absolute bottom-full right-0 mb-2 w-56 p-2.5 rounded-md text-[10px] leading-relaxed z-50 anim-fade whitespace-pre-line"
+          className="absolute top-full right-0 mt-2 w-56 p-2.5 rounded-md text-[10px] leading-relaxed z-[20] anim-fade whitespace-pre-line"
           style={{
             background: 'var(--tooltip-bg)',
             color: 'var(--tooltip-text)',
@@ -260,7 +260,7 @@ export default function DayDrilldownModal({ data, onClose }: DayDrilldownModalPr
         style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-lg)' }}
       >
         {/* Header */}
-        <div className="sticky top-0 flex items-center justify-between p-5 pb-3" style={{ background: 'var(--bg-surface)' }}>
+        <div className="sticky top-0 z-[10] flex items-center justify-between p-5 pb-3" style={{ background: 'var(--bg-surface)' }}>
           <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
             Day {data.day} — Full Breakdown
           </h2>
