@@ -11,7 +11,8 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import type { Insight, SuggestionItem, HealthPulseData } from '@/lib/types';
-import { HEALTH_CARDS } from '@/lib/labels';
+import { HEALTH_CARDS, SCORE_BUCKET_LEGEND } from '@/lib/labels';
+import { Info } from 'lucide-react';
 import Header from './Header';
 import ExecutiveHealthCards from './ExecutiveHealthCards';
 import type { MetricCardData } from './ExecutiveHealthCards';
@@ -385,6 +386,20 @@ export default function Dashboard() {
             SECTION 1: INSIGHTS — what's working + actions
             The primary content layer for executive understanding
             ============================================================ */}
+
+        {/* Lead Scoring Note */}
+        <div className="mb-8 p-4 rounded-lg" style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}>
+          <details className="group">
+            <summary className="flex items-center gap-2 cursor-pointer list-none text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
+              <Info className="w-3.5 h-3.5 flex-shrink-0" style={{ color: 'var(--accent)' }} />
+              <span>Note: How Lead Quality Scores work</span>
+              <span className="ml-auto text-[10px] opacity-50 group-open:hidden">click to expand</span>
+            </summary>
+            <div className="mt-3 text-[11px] leading-relaxed whitespace-pre-line" style={{ color: 'var(--text-tertiary)' }}>
+              {SCORE_BUCKET_LEGEND}
+            </div>
+          </details>
+        </div>
 
         {/* 1a: What's Working */}
         {positiveInsights.length > 0 && (
