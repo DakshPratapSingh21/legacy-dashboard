@@ -8,7 +8,7 @@ interface HealthPulseProps {
 }
 
 const configs = {
-  pacing: { icon: Target, label: 'Units Booked' },
+  pacing: { icon: Target, label: 'Flats Blocked' },
   pickup: { icon: Phone, label: 'Connection Rate' },
   handoff: { icon: ArrowRightLeft, label: 'Visit Follow-Through' },
 } as const;

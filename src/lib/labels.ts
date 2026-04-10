@@ -9,8 +9,8 @@
 export const STAGE = {
   PSV: 'Site Visit Scheduled',
   SV: 'Site Visit Completed',
-  FB: 'Unit Booked',
-  SC: 'Deal Closed',
+  FB: 'Flat Blocked',
+  SC: 'Sale Closed',
   NI: 'Not Interested',
   LI: 'Contacted',
 } as const;
@@ -22,8 +22,8 @@ export const METRIC = {
   REACH_RATE: 'Connection Rate',
   VISIT_SCHEDULED_RATE: 'Visit Scheduling Rate',
   VISIT_COMPLETED_RATE: 'Visit Completion Rate',
-  BOOKING_RATE: 'Booking Rate',
-  BOOKINGS_PER_100: 'Bookings per 100 Leads',
+  BOOKING_RATE: 'Blocking Rate',
+  BOOKINGS_PER_100: 'Flats Blocked per 100 Leads',
   FOLLOW_THROUGH_RATE: 'Follow-Through Rate',
 } as const;
 
@@ -65,7 +65,7 @@ export const TRAJECTORY_TABS = {
   PICKUP: { label: 'Connection Rate', subtitle: 'What % of unique leads picked up the phone, over time' },
   VISIT_SCHEDULED: { label: 'Visit Scheduling Rate', subtitle: 'What % of unique leads scheduled a site visit, over time' },
   VISIT_COMPLETED: { label: 'Visit Completion Rate', subtitle: 'Day-on-day: what % of each day\'s new leads completed a site visit' },
-  BOOKINGS: { label: 'Units Booked', subtitle: 'How many units were booked cumulatively, day by day' },
+  BOOKINGS: { label: 'Flats Blocked', subtitle: 'How many flats were blocked cumulatively, day by day' },
 } as const;
 
 // ---- Drill-down metric labels ----
@@ -76,23 +76,23 @@ export const DRILLDOWN = {
   CONNECTION_RATE: 'Connection Rate',
   VISITS_SCHEDULED: 'Visits Scheduled',
   VISIT_SCHEDULE_RATE: 'Visit Scheduling Rate',
-  CUMULATIVE_BOOKINGS: 'Total Units Booked',
-  CUMULATIVE_DEALS: 'Total Deals Closed',
+  CUMULATIVE_BOOKINGS: 'Total Flats Blocked',
+  CUMULATIVE_DEALS: 'Total Sales Closed',
 } as const;
 
 // ---- Health card labels ----
 export const HEALTH_CARDS = {
   BOOKINGS: {
-    label: 'Units Booked',
-    tooltip: 'Total units booked across the campaign so far. Compared at the same campaign day — so if Legacy is on Day 5, you see what Broadway and Landmark had by their Day 5 too.',
+    label: 'Flats Blocked',
+    tooltip: 'Total flats blocked across the campaign so far. Compared at the same campaign day — so if Legacy is on Day 5, you see what Broadway and Landmark had by their Day 5 too.',
   },
   DEALS: {
-    label: 'Deals Closed',
-    tooltip: 'Sales that are fully closed. This is the final step in the funnel — a lead went from first call all the way to signing.',
+    label: 'Sales Closed',
+    tooltip: 'Sales that are fully closed. This is the final step in the funnel — a lead went from first call all the way to a signed deal.',
   },
   BOOKINGS_PER_100: {
-    label: 'Bookings per 100 Leads',
-    tooltip: 'For every 100 unique leads called, how many ended up booking a unit? Higher is better. Uses unique leads (not repeat calls) as the base.',
+    label: 'Flats Blocked per 100 Leads',
+    tooltip: 'For every 100 unique leads called, how many ended up blocking a flat? Higher is better. Uses unique leads (not repeat calls) as the base.',
   },
   CONNECTION_RATE: {
     label: 'Connection Rate',

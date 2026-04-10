@@ -134,7 +134,7 @@ export default function ExecPerformanceBins({ data }: ExecPerformanceBinsProps) 
             </div>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
               Agents are rated A through D by comparing their results to other agents who worked with the same type and quality of leads.
-              An &ldquo;A&rdquo; agent in the top 25% connected with more leads, scheduled more visits, and booked more units than 75% of their peers.
+              An &ldquo;A&rdquo; agent in the top 25% connected with more leads, scheduled more visits, and blocked more flats than 75% of their peers.
               Ratings update every 7 days and only count when an agent has handled enough leads for a fair comparison.
             </p>
           </div>
@@ -155,7 +155,7 @@ export default function ExecPerformanceBins({ data }: ExecPerformanceBinsProps) 
                       <th className="text-center py-2 px-2 font-semibold" style={{ color: 'var(--text-secondary)' }}>Leads</th>
                       <th className="text-center py-2 px-2 font-semibold" style={{ color: 'var(--text-secondary)' }}>Connected</th>
                       <th className="text-center py-2 px-2 font-semibold" style={{ color: 'var(--text-secondary)' }}>Visit Rate</th>
-                      <th className="text-center py-2 px-2 font-semibold" style={{ color: 'var(--text-secondary)' }}>Booking Rate</th>
+                      <th className="text-center py-2 px-2 font-semibold" style={{ color: 'var(--text-secondary)' }}>Blocking Rate</th>
                       <th className="text-center py-2 px-2 font-semibold" style={{ color: 'var(--text-secondary)' }}>Not Interested</th>
                     </tr>
                   </thead>
@@ -219,7 +219,7 @@ export default function ExecPerformanceBins({ data }: ExecPerformanceBinsProps) 
                                 <MetricRow label="Leads handled" value={l.leadsCalledTotal.toLocaleString()} />
                                 <MetricRow label="Connected" value={pct(l.connectionRate)} highlight={l.connectionRate > 0.5} />
                                 <MetricRow label="Visit rate" value={pct(l.visitRate)} highlight={l.visitRate > 0.05} />
-                                <MetricRow label="Booking rate" value={pct(l.bookingRate)} highlight={l.bookingRate > 0.01} />
+                                <MetricRow label="Blocking rate" value={pct(l.bookingRate)} highlight={l.bookingRate > 0.01} />
                                 <MetricRow label="Not interested" value={pct(l.niRate)} warn={l.niRate > 0.4} />
                               </div>
                             </div>
@@ -239,7 +239,7 @@ export default function ExecPerformanceBins({ data }: ExecPerformanceBinsProps) 
                                 <MetricRow label="Leads handled" value={b.leadsCalledTotal.toLocaleString()} />
                                 <MetricRow label="Connected" value={pct(b.connectionRate)} highlight={b.connectionRate > 0.5} />
                                 <MetricRow label="Visit rate" value={pct(b.visitRate)} highlight={b.visitRate > 0.05} />
-                                <MetricRow label="Booking rate" value={pct(b.bookingRate)} highlight={b.bookingRate > 0.01} />
+                                <MetricRow label="Blocking rate" value={pct(b.bookingRate)} highlight={b.bookingRate > 0.01} />
                                 <MetricRow label="Not interested" value={pct(b.niRate)} warn={b.niRate > 0.4} />
                               </div>
                             </div>

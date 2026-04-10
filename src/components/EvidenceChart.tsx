@@ -76,7 +76,7 @@ export function VelocityChart({ landmark, broadway, legacy, metric, title }: Vel
   if (legacy) { for (const row of legacy) { const e = dayMap.get(row.day) || {}; e[`legacy_${metric}`] = row[metric]; e.day = row.day; dayMap.set(row.day, e); } }
   const chartData = Array.from(dayMap.values()).sort((a, b) => a.day - b.day);
 
-  const metricLabels: Record<string, string> = { fb: 'Units Booked', psv: 'Visits Scheduled', leadsCalled: 'Unique Leads Called' };
+  const metricLabels: Record<string, string> = { fb: 'Flats Blocked', psv: 'Visits Scheduled', leadsCalled: 'Unique Leads Called' };
   const ts = { fontSize: 10, fill: C.textMuted, fontFamily: 'DM Sans' };
   const tt = { backgroundColor: C.tooltipBg, border: `1px solid ${C.tooltipBorder}`, borderRadius: '8px', fontSize: '11px', padding: '10px 12px', color: C.tooltipText };
 

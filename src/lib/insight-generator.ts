@@ -123,23 +123,23 @@ function generateScoreBucketInsight(analysis: AnalysisResults): Insight | null {
   return {
     id: nextId(),
     category: 'positive',
-    headline: `"${friendlyBucket}" quality leads: ${winner} booked ${winnerVal.toFixed(1)} units per 100 leads`,
-    detail: `Among "${friendlyBucket}" quality leads, ${winner} booked ${winnerVal.toFixed(1)} units per 100 unique leads — ${((winnerVal - loserVal) / Math.max(loserVal, 0.01) * 100).toFixed(0)}% more than the other campaign's ${loserVal.toFixed(1)}. ${topBucket ? `The best-performing lead quality group overall was "${bucketLabel(topBucket.scoreBucket)}" (${topBucket.project}) with ${topBucket.fbPer100.toFixed(1)} bookings per 100 leads.` : ''}`,
+    headline: `"${friendlyBucket}" quality leads: ${winner} blocked ${winnerVal.toFixed(1)} flats per 100 leads`,
+    detail: `Among "${friendlyBucket}" quality leads, ${winner} blocked ${winnerVal.toFixed(1)} flats per 100 unique leads — ${((winnerVal - loserVal) / Math.max(loserVal, 0.01) * 100).toFixed(0)}% more than the other campaign's ${loserVal.toFixed(1)}. ${topBucket ? `The best-performing lead quality group overall was "${bucketLabel(topBucket.scoreBucket)}" (${topBucket.project}) with ${topBucket.fbPer100.toFixed(1)} blockings per 100 leads.` : ''}`,
     dataTrail: [
       {
         label: `Landmark — ${friendlyBucket}`,
-        value: `${bestLandmark.fbPer100.toFixed(2)} bookings/100`,
+        value: `${bestLandmark.fbPer100.toFixed(2)} blocked/100`,
         context: `${bestLandmark.leadsCalled} unique leads, ${(bestLandmark.convRatePsv * 100).toFixed(1)}% scheduled a visit`,
       },
       {
         label: `Broadway — ${friendlyBucket}`,
-        value: `${bestBroadway.fbPer100.toFixed(2)} bookings/100`,
+        value: `${bestBroadway.fbPer100.toFixed(2)} blocked/100`,
         context: `${bestBroadway.leadsCalled} unique leads, ${(bestBroadway.convRatePsv * 100).toFixed(1)}% scheduled a visit`,
       },
     ],
     suggestion: `Prioritise "${friendlyBucket}" quality leads for Legacy, following ${winner}'s approach. Their connection rate was ${(Math.max(bestLandmark.avgPickupRate, bestBroadway.avgPickupRate) * 100).toFixed(0)}% in this group.`,
     projectedImpact: {
-      metric: 'Bookings per 100 leads',
+      metric: 'Flats blocked per 100 leads',
       currentValue: loserVal,
       projectedValue: loserVal + (winnerVal - loserVal) * REALIZATION_FACTOR,
       confidence: bestDelta > 1 ? 'high' : 'medium',
@@ -412,18 +412,18 @@ function generatePacingInsight(analysis: AnalysisResults): Insight | null {
   return {
     id: nextId(),
     category: 'positive',
-    headline: `By day ${latestMilestone}: ${winner} led with ${Math.max(lAtMilestone.fb, bAtMilestone.fb)} units booked vs ${Math.min(lAtMilestone.fb, bAtMilestone.fb)}`,
-    detail: `By campaign day ${latestMilestone}, Landmark had ${lAtMilestone.fb} units booked (from ${lAtMilestone.leadsCalled.toLocaleString()} unique leads) while Broadway had ${bAtMilestone.fb} (from ${bAtMilestone.leadsCalled.toLocaleString()} unique leads). ${winner} was ${(Math.abs(fbDelta) / Math.min(lAtMilestone.fb, bAtMilestone.fb) * 100).toFixed(0)}% ahead at this point.`,
+    headline: `By day ${latestMilestone}: ${winner} led with ${Math.max(lAtMilestone.fb, bAtMilestone.fb)} flats blocked vs ${Math.min(lAtMilestone.fb, bAtMilestone.fb)}`,
+    detail: `By campaign day ${latestMilestone}, Landmark had ${lAtMilestone.fb} flats blocked (from ${lAtMilestone.leadsCalled.toLocaleString()} unique leads) while Broadway had ${bAtMilestone.fb} (from ${bAtMilestone.leadsCalled.toLocaleString()} unique leads). ${winner} was ${(Math.abs(fbDelta) / Math.min(lAtMilestone.fb, bAtMilestone.fb) * 100).toFixed(0)}% ahead at this point.`,
     dataTrail: milestones.map((d) => {
       const l = pacingLandmark.trajectory.find((t) => t.day === d);
       const b = pacingBroadway.trajectory.find((t) => t.day === d);
       return {
         label: `Day ${d}`,
-        value: `Landmark: ${l?.fb || 0} | Broadway: ${b?.fb || 0} booked`,
+        value: `Landmark: ${l?.fb || 0} | Broadway: ${b?.fb || 0} blocked`,
         context: `Landmark: ${l?.leadsCalled?.toLocaleString() || 0} leads | Broadway: ${b?.leadsCalled?.toLocaleString() || 0} leads`,
       };
     }),
-    suggestion: `Legacy should target ${winner}'s day-${latestMilestone} benchmark of ${Math.max(lAtMilestone.fb, bAtMilestone.fb)} units booked. Track daily progress against this number.`,
+    suggestion: `Legacy should target ${winner}'s day-${latestMilestone} benchmark of ${Math.max(lAtMilestone.fb, bAtMilestone.fb)} flats blocked. Track daily progress against this number.`,
     projectedImpact: null,
     priority: 2,
     sourceTable: 'T7',
@@ -448,7 +448,7 @@ function generateSegmentInsights(analysis: AnalysisResults): Insight[] {
 
     const metricLabel = comp.metric === 'call_pickup_rate' ? 'connection rate'
       : comp.metric === 'conv_rate_psv' ? 'visit scheduling rate'
-      : 'booking rate';
+      : 'blocking rate';
 
     insights.push({
       id: nextId(),
@@ -495,13 +495,13 @@ function generateDemoSuggestions(analysis: AnalysisResults): SuggestionItem[] {
     suggestions.push({
       id: `sug-${++sugId}`,
       ifCondition: `Call "${friendly}" quality leads first in Legacy`,
-      thenImpact: `Expect ~${(bestLB.fbPer100 * REALIZATION_FACTOR).toFixed(1)} bookings per 100 leads (conservative estimate)`,
+      thenImpact: `Expect ~${(bestLB.fbPer100 * REALIZATION_FACTOR).toFixed(1)} flats blocked per 100 leads (conservative estimate)`,
       confidence: bestLB.fbPer100 > matchingBB.fbPer100 ? 'high' : 'medium',
-      basedOn: `Landmark booked ${bestLB.fbPer100.toFixed(1)} per 100 in this group vs Broadway's ${matchingBB.fbPer100.toFixed(1)}`,
+      basedOn: `Landmark blocked ${bestLB.fbPer100.toFixed(1)} per 100 in this group vs Broadway's ${matchingBB.fbPer100.toFixed(1)}`,
       currentValue: matchingBB.fbPer100,
       projectedValue: bestLB.fbPer100,
       conservativeValue: matchingBB.fbPer100 + (bestLB.fbPer100 - matchingBB.fbPer100) * REALIZATION_FACTOR,
-      metric: 'Bookings per 100 leads',
+      metric: 'Flats blocked per 100 leads',
     });
   }
 
@@ -562,7 +562,7 @@ function generateDemoSuggestions(analysis: AnalysisResults): SuggestionItem[] {
       ifCondition: `Reach ${maxLeads.toLocaleString()}+ unique leads in Legacy (matching the larger campaign)`,
       thenImpact: `At the better campaign's rate, that's ~${Math.round(maxLeads * bestRate)} potential bookings`,
       confidence: 'medium',
-      basedOn: `Best booking rate across campaigns: ${(bestRate * 100).toFixed(2)}% of unique leads`,
+      basedOn: `Best blocking rate across campaigns: ${(bestRate * 100).toFixed(2)}% of unique leads`,
       currentValue: Math.min(bookingsPerLead_L, bookingsPerLead_B),
       projectedValue: bestRate,
       conservativeValue: Math.min(bookingsPerLead_L, bookingsPerLead_B) + (bestRate - Math.min(bookingsPerLead_L, bookingsPerLead_B)) * REALIZATION_FACTOR,
@@ -598,18 +598,18 @@ function generateLiveInsights(analysis: AnalysisResults): Insight[] {
       insights.push({
         id: nextId(),
         category: status as 'positive' | 'suggestion' | 'warning',
-        headline: `Legacy Day ${day}: ${pl.cumulativeFb} units booked — ${(vsL * 100).toFixed(0)}% of Landmark's pace, ${(vsB * 100).toFixed(0)}% of Broadway's`,
-        detail: `At campaign day ${day}, Legacy has booked ${pl.cumulativeFb} units from ${pl.cumulativeLeadsCalled.toLocaleString()} unique leads. At the same point, Landmark had ${lAtDay.fb} and Broadway had ${bAtDay.fb}. ${pl.projectedFb90 ? `At the current pace, Legacy is on track for ~${pl.projectedFb90} bookings by day 90.` : ''}`,
+        headline: `Legacy Day ${day}: ${pl.cumulativeFb} flats blocked — ${(vsL * 100).toFixed(0)}% of Landmark's pace, ${(vsB * 100).toFixed(0)}% of Broadway's`,
+        detail: `At campaign day ${day}, Legacy has blocked ${pl.cumulativeFb} flats from ${pl.cumulativeLeadsCalled.toLocaleString()} unique leads. At the same point, Landmark had ${lAtDay.fb} and Broadway had ${bAtDay.fb}. ${pl.projectedFb90 ? `At the current pace, Legacy is on track for ~${pl.projectedFb90} blockings by day 90.` : ''}`,
         dataTrail: [
-          { label: `Legacy Day ${day}`, value: `${pl.cumulativeFb} booked`, context: `${pl.cumulativeLeadsCalled.toLocaleString()} unique leads, ${(pl.cumulativePickupRate * 100).toFixed(1)}% connected` },
-          { label: `Landmark Day ${day}`, value: `${lAtDay.fb} booked`, context: `${lAtDay.leadsCalled.toLocaleString()} unique leads` },
-          { label: `Broadway Day ${day}`, value: `${bAtDay.fb} booked`, context: `${bAtDay.leadsCalled.toLocaleString()} unique leads` },
+          { label: `Legacy Day ${day}`, value: `${pl.cumulativeFb} blocked`, context: `${pl.cumulativeLeadsCalled.toLocaleString()} unique leads, ${(pl.cumulativePickupRate * 100).toFixed(1)}% connected` },
+          { label: `Landmark Day ${day}`, value: `${lAtDay.fb} blocked`, context: `${lAtDay.leadsCalled.toLocaleString()} unique leads` },
+          { label: `Broadway Day ${day}`, value: `${bAtDay.fb} blocked`, context: `${bAtDay.leadsCalled.toLocaleString()} unique leads` },
         ],
         suggestion: vsL < 0.8
-          ? `Legacy needs ~${Math.ceil((lAtDay.fb - pl.cumulativeFb) / Math.max(1, 90 - day))} more bookings per day to match Landmark's pace by day 90.`
+          ? `Legacy needs ~${Math.ceil((lAtDay.fb - pl.cumulativeFb) / Math.max(1, 90 - day))} more blockings per day to match Landmark's pace by day 90.`
           : `Legacy is on track. Keep the current approach and review weekly.`,
         projectedImpact: pl.projectedFb90 ? {
-          metric: 'Bookings by day 90',
+          metric: 'Flats blocked by day 90',
           currentValue: pl.cumulativeFb,
           projectedValue: pl.projectedFb90,
           confidence: day > 30 ? 'medium' : 'low',

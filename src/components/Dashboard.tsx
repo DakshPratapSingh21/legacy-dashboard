@@ -388,14 +388,14 @@ export default function Dashboard() {
             ============================================================ */}
 
         {/* Lead Scoring Note */}
-        <div className="mb-8 p-4 rounded-lg" style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}>
+        <div className="mb-8 p-4 rounded-lg" style={{ background: 'var(--accent-muted, rgba(99,102,241,0.08))', border: '1px solid var(--accent, #6366f1)', borderLeft: '4px solid var(--accent, #6366f1)' }}>
           <details className="group">
-            <summary className="flex items-center gap-2 cursor-pointer list-none text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
-              <Info className="w-3.5 h-3.5 flex-shrink-0" style={{ color: 'var(--accent)' }} />
-              <span>Note: How Lead Quality Scores work</span>
-              <span className="ml-auto text-[10px] opacity-50 group-open:hidden">click to expand</span>
+            <summary className="flex items-center gap-2 cursor-pointer list-none text-sm" style={{ color: 'var(--text-primary)' }}>
+              <Info className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--accent)' }} />
+              <span className="font-bold">Note: Lead Quality Scoring System</span>
+              <span className="ml-auto text-[10px] font-medium opacity-60 group-open:hidden" style={{ color: 'var(--accent)' }}>tap to learn more</span>
             </summary>
-            <div className="mt-3 text-[11px] leading-relaxed whitespace-pre-line" style={{ color: 'var(--text-tertiary)' }}>
+            <div className="mt-3 text-xs leading-relaxed whitespace-pre-line" style={{ color: 'var(--text-secondary)' }}>
               {SCORE_BUCKET_LEGEND}
             </div>
           </details>
@@ -410,7 +410,7 @@ export default function Dashboard() {
             >
               What&apos;s Working
             </h2>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {positiveInsights.map((insight, i) => (
                 <InsightCard key={insight.id} insight={insight} index={i} />
               ))}
@@ -427,7 +427,7 @@ export default function Dashboard() {
             >
               Insights & Actions
             </h2>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {actionInsights.map((insight, i) => (
                 <InsightCard key={insight.id} insight={insight} index={i} />
               ))}
@@ -474,7 +474,7 @@ export default function Dashboard() {
                 broadway={data.velocity.broadway}
                 legacy={data.velocity.legacy}
                 metric="fb"
-                title={data.insights.find((i) => i.sourceTable === 'T7')?.headline || 'Campaign progress — cumulative units booked'}
+                title={data.insights.find((i) => i.sourceTable === 'T7')?.headline || 'Campaign progress — cumulative flats blocked'}
               />
             )}
             {data.scoreBuckets.length > 0 && (

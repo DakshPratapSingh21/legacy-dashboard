@@ -318,7 +318,7 @@ export default function DayDrilldownModal({ data, onClose }: DayDrilldownModalPr
             broadway={b?.cumulativeFb ?? null}
             landmark={l?.cumulativeFb ?? null}
             legacy={leg?.cumulativeFb}
-            info="Running total of units booked up to this day."
+            info="Running total of flats blocked up to this day."
           />
           <MetricRow
             label={DRILLDOWN.CUMULATIVE_DEALS}

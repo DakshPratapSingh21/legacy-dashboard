@@ -917,13 +917,13 @@ function computeHealthPulse(
 
     return {
       pacing: {
-        label: 'Units Booked',
-        value: `${pacingLeg.cumulativeFb} booked at Day ${pacingLeg.latestDay}`,
+        label: 'Flats Blocked',
+        value: `${pacingLeg.cumulativeFb} blocked at Day ${pacingLeg.latestDay}`,
         trend: pacingVsL >= 1 ? 'up' : 'down',
         status: pacingVsL >= 0.8 ? 'good' : pacingVsL >= 0.5 ? 'warning' : 'critical',
         vsLandmark: `${(pacingVsL * 100).toFixed(0)}% of Landmark pace`,
         vsBroadway: `${(pacingVsB * 100).toFixed(0)}% of Broadway pace`,
-        detail: `Legacy has ${pacingLeg.cumulativeFb} units booked at campaign day ${pacingLeg.latestDay}`,
+        detail: `Legacy has ${pacingLeg.cumulativeFb} flats blocked at campaign day ${pacingLeg.latestDay}`,
       },
       pickup: {
         label: 'Connection Rate',
@@ -960,13 +960,13 @@ function computeHealthPulse(
 
   return {
     pacing: {
-      label: 'Units Booked',
+      label: 'Flats Blocked',
       value: `Landmark: ${avgFbL} | Broadway: ${avgFbB}`,
       trend: avgFbL > avgFbB ? 'up' : 'down',
       status: 'good',
-      vsLandmark: `${avgFbL} units booked over ${pacingL.latestDay} days`,
-      vsBroadway: `${avgFbB} units booked over ${pacingB.latestDay} days`,
-      detail: `Landmark booked ${avgFbL} units in ${pacingL.latestDay} days vs Broadway's ${avgFbB} in ${pacingB.latestDay} days`,
+      vsLandmark: `${avgFbL} flats blocked over ${pacingL.latestDay} days`,
+      vsBroadway: `${avgFbB} flats blocked over ${pacingB.latestDay} days`,
+      detail: `Landmark blocked ${avgFbL} flats in ${pacingL.latestDay} days vs Broadway's ${avgFbB} in ${pacingB.latestDay} days`,
     },
     pickup: {
       label: 'Connection Rate',
